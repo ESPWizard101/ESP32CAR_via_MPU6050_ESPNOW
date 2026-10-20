@@ -18,11 +18,9 @@ typedef struct struct_message {
 
 struct_message dataToSend;
 
-// MPU6050 address and variables
 #define MPU_ADDR 0x68
 int16_t AcX, AcY, AcZ;
 
-// LED pin
 const int LED_PIN = 2;
 
 void setup() {
