@@ -2,18 +2,18 @@
 
 // This code reads tilt from MPU6050 accelerometer and sends speed/angle commands to the car ESP32 via ESP-NOW.
 
-
 #include <Wire.h>
 #include <esp_now.h>
 #include <WiFi.h>
+#include <cstdint>
 
 //The mac address of the other esp32 which will use later in order to connect the 2 ESP32s via ESP_NOW
 uint8_t carMAC[] = {0xXX, 0xXX, 0xXX, 0xXX, 0xXX, 0xXX};  
 
 // Data structure to send
 typedef struct struct_message {
-  int speed;  // -100 to 100
-  int angle;  // 50 to 140
+  int8_t speed;  // -100 to 100
+  uint8_t angle;  // 50 to 140
 } struct_message;
 
 struct_message dataToSend;
@@ -21,7 +21,7 @@ struct_message dataToSend;
 #define MPU_ADDR 0x68
 int16_t AcX, AcY, AcZ;
 
-const int LED_PIN = 2;
+constexpr uint8_t LED_PIN = 2;
 
 void setup() {
   Serial.begin(115200);
@@ -37,6 +37,7 @@ void setup() {
 
   // Initialize ESP-NOW
   WiFi.mode(WIFI_STA);
+  
   if (esp_now_init() != ESP_OK) {
     Serial.println("ESP-NOW init failed");
     return;
