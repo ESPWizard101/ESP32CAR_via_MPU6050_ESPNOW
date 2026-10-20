@@ -12,8 +12,8 @@ uint8_t carMAC[] = {0xXX, 0xXX, 0xXX, 0xXX, 0xXX, 0xXX};
 
 // Data structure to send
 typedef struct struct_message {
-  int8_t speed;  // -100 to 100
-  uint8_t angle;  // 50 to 140
+  int16_t speed;  // -100 to 100
+  uint16_t angle;  // 50 to 140
 } struct_message;
 
 struct_message dataToSend;
