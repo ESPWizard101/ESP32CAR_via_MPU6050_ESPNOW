@@ -4,30 +4,31 @@
 #include <esp_now.h>
 #include <WiFi.h>
 #include <ESP32Servo.h>
+#include <cstdint>
 
 // Motor pins for the DRI0044 MOTOR DRIVER
-const int MOTOR_A_IA = 17;
-const int MOTOR_A_IB = 16;
-const int MOTOR_B_IA = 21;
-const int MOTOR_B_IB = 23;
-const int SERVO_PIN = 15;
+constexpr uint8_t MOTOR_A_IA = 17;
+constexpr uint8_t MOTOR_A_IB = 16;
+constexpr uint8_t MOTOR_B_IA = 21;
+constexpr uint8_t MOTOR_B_IB = 23;
+constexpr uint8_t SERVO_PIN = 15;
 
 // Calibration factors
-const float FORWARD_FACTOR = 1.2f;
-const float BACKWARD_FACTOR = 0.9f;
+constexpr float FORWARD_FACTOR = 1.2f;
+constexpr float BACKWARD_FACTOR = 0.9f;
 
 // Data structure to receive
 typedef struct struct_message {
-  int speed;  // -100 to 100
-  int angle;  // 50 to 140
+  int16_t speed;  // -100 to 100
+  uint16_t angle;  // 50 to 140
 } struct_message;
 
 struct_message receivedData;
 
 // Globals
 Servo steeringServo;
-int currentSpeed = 0;
-int currentAngle = 95;
+int16_t currentSpeed = 0;
+uint16_t currentAngle = 95;
 
 // Callback when data received 
 void OnDataRecv(const esp_now_recv_info_t *recv_info, const uint8_t *incomingData, int len) {
